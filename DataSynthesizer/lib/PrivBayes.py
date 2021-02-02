@@ -119,7 +119,7 @@ def worker(paras):
     return parents_pair_list, mutual_info_list
 
 
-def greedy_bayes(dataset: DataFrame, k: int, epsilon: float):
+def greedy_bayes(dataset: DataFrame, k: int, epsilon: float, user_pool: int = 1):
     """Construct a Bayesian Network (BN) using greedy algorithm.
 
     Parameters
@@ -152,7 +152,7 @@ def greedy_bayes(dataset: DataFrame, k: int, epsilon: float):
         num_parents = min(len(V), k)
         tasks = [(child, V, num_parents, split, dataset) for child, split in
                  product(rest_attributes, range(len(V) - num_parents + 1))]
-        with Pool() as pool:
+        with Pool(user_pool) as pool:
             res_list = pool.map(worker, tasks)
 
         for res in res_list:

@@ -138,7 +138,8 @@ class DataDescriber:
                                                       categorical_attribute_domain_file: str = None,
                                                       numerical_attribute_ranges: Dict[str, List] = None,
                                                       seed=0,
-                                                      bayesian_network: List[tuple] = None):
+                                                      bayesian_network: List[tuple] = None,
+                                                      user_pool: int = 1):
         """Generate dataset description using correlated attribute mode.
 
         Parameters
@@ -176,7 +177,7 @@ class DataDescriber:
             raise Exception("Correlated Attribute Mode requires at least 2 attributes(i.e., columns) in dataset.")
 
         if len(bayesian_network) == 0:
-            self.bayesian_network = greedy_bayes(self.df_encoded, k, epsilon / 2)
+            self.bayesian_network = greedy_bayes(self.df_encoded, k, epsilon / 2, user_pool)
         else:
             print('Pre-configured Bayesian Network (BN) is used')
             bn_list = []
